@@ -17,10 +17,11 @@ class DatabaseSeeder extends Seeder
         UserSeeder::class,
         MataPelajaranSeeder::class,
         GuruSeeder::class,
+        MuridSeeder::class, // <-- ini HARUS sebelum NilaiSeeder
         NilaiSeeder::class,
-        MuridSeeder::class,
     ]);
 }
+
 
 
 }

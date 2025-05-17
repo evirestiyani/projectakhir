@@ -11,12 +11,12 @@
                         <div class="d-sm-flex justify-content-between align-items-center">
                             <div>
                                 <h5 class="text-white-50 mb-1">Selamat Datang di</h5>
-                                <h2 class="fw-bold text-white mb-0">Manajemen Data Guru</h2>
-                                <p class="text-white-50 mt-2 mb-0">Kelola dan lihat semua data pengajar di satu tempat</p>
+                                <h2 class="fw-bold text-white mb-0">Manajemen Data Murid</h2>
+                                <p class="text-white-50 mt-2 mb-0">Kelola dan lihat semua data murid di satu tempat</p>
                             </div>
                             <div class="mt-3 mt-sm-0">
-                                <a href="{{ route('admin.dataguru.create') }}" class="btn btn-light text-dark">
-                                    <i class="fas fa-user-plus me-1"></i> Tambah Guru Baru
+                                <a href="{{ route('admin.datamurid.create') }}" class="btn btn-light text-dark">
+                                    <i class="fas fa-user-plus me-1"></i> Tambah Murid Baru
                                 </a>
                             </div>
                         </div>
@@ -27,7 +27,7 @@
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5">
                         <li class="breadcrumb-item text-sm"><a class="opacity-5 text-dark" href="#">Dashboard</a></li>
-                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Guru</li>
+                        <li class="breadcrumb-item text-sm text-dark active" aria-current="page">Data Murid</li>
                     </ol>
                 </nav>
             </div>
@@ -41,8 +41,8 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Total Guru</p>
-                                    <h3 class="font-weight-bold mb-0">{{ $guru->total() }}</h3>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Total Murid</p>
+                                    <h3 class="font-weight-bold mb-0">{{ $murid->total() }}</h3>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -60,8 +60,9 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Guru Laki-laki</p>
-                                    <h3 class="font-weight-bold mb-0">{{ $guru->where('jenis_kelamin', 'L')->count() }}</h3>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Murid Laki-laki</p>
+                                    <h3 class="font-weight-bold mb-0">{{ $murid->where('jenis_kelamin', 'L')->count() }}
+                                    </h3>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -79,8 +80,9 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Guru Perempuan</p>
-                                    <h3 class="font-weight-bold mb-0">{{ $guru->where('jenis_kelamin', 'P')->count() }}</h3>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Murid Perempuan</p>
+                                    <h3 class="font-weight-bold mb-0">{{ $murid->where('jenis_kelamin', 'P')->count() }}
+                                    </h3>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
@@ -98,13 +100,13 @@
                         <div class="row">
                             <div class="col-8">
                                 <div class="numbers">
-                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Mata Pelajaran</p>
-                                    <h3 class="font-weight-bold mb-0">{{ count($mapel) }}</h3>
+                                    <p class="text-sm mb-0 text-uppercase font-weight-bold text-muted">Total Kelas</p>
+                                    <h3 class="font-weight-bold mb-0">{{ count($kelasList) }}</h3>
                                 </div>
                             </div>
                             <div class="col-4 text-end">
                                 <div class="icon-shape bg-warning text-white rounded-circle shadow">
-                                    <i class="fas fa-book"></i>
+                                    <i class="fas fa-school"></i>
                                 </div>
                             </div>
                         </div>
@@ -120,21 +122,19 @@
                     <div class="card-body p-3">
                         <div class="row align-items-center">
                             <div class="col-md-6 mb-3 mb-md-0">
-                                <form method="GET" action="{{ route('admin.dataguru.index') }}" class="d-flex">
+                                <form method="GET" action="{{ route('admin.datamurid.index') }}" class="d-flex">
                                     <div class="input-group w-100">
                                         <span class="input-group-text bg-white border-end-0">
                                             <i class="fas fa-search"></i>
                                         </span>
                                         <input type="text" class="form-control ps-0 border-start-0" name="search"
                                             value="{{ request('search') }}"
-                                            placeholder="Cari guru berdasarkan nama atau NIP..." style="width: 70%;">
+                                            placeholder="Cari murid berdasarkan nama atau NIS..." style="width: 70%;">
                                         <button class="btn" type="submit"
                                             style="width: 20%; background-color: #309898; color: white;">
                                             Cari
                                         </button>
                                     </div>
-
-
                                 </form>
                             </div>
                             <div class="col-md-6">
@@ -143,14 +143,12 @@
                                         data-bs-target="#advancedFilter" aria-expanded="false">
                                         <i class="fas fa-filter me-2"></i> Filter
                                     </button>
-                                    <a href="{{ route('admin.dataguru.exportPDF') }}" class="btn btn-outline-danger">
+                                    <a href="{{ route('admin.datamurid.exportPDF') }}" class="btn btn-outline-danger">
                                         <i class="fas fa-file-pdf me-2"></i> Export PDF
                                     </a>
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -161,24 +159,26 @@
     <div class="collapse mb-4" id="advancedFilter">
         <div class="card border-0 shadow-sm">
             <div class="card-body bg-light p-3">
-                <form method="GET" action="{{ route('admin.dataguru.index') }}" class="row g-3">
+                <form method="GET" action="{{ route('admin.datamurid.index') }}" class="row g-3">
                     <div class="col-md-4">
-                        <label class="form-label small fw-bold">Mata Pelajaran</label>
-                        <select name="subject" class="form-select form-select-sm">
-                            <option value="">Semua Mata Pelajaran</option>
-                            @foreach ($mapel as $m)
-                                <option value="{{ $m->id }}" {{ request('subject') == $m->id ? 'selected' : '' }}>
-                                    {{ $m->mata_pelajaran }}
+                        <label class="form-label small fw-bold">Kelas</label>
+                        <select name="kelas" class="form-select form-select-sm">
+                            <option value="">Semua Kelas</option>
+                            @foreach ($kelasList as $kelas)
+                                <option value="{{ $kelas }}" {{ request('kelas') == $kelas ? 'selected' : '' }}>
+                                    {{ $kelas }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
                     <div class="col-md-4">
                         <label class="form-label small fw-bold">Jenis Kelamin</label>
-                        <select name="gender" class="form-select form-select-sm">
-                            <option value="">Semua</option>
-                            <option value="L" {{ request('gender') == 'L' ? 'selected' : '' }}>Laki-laki</option>
-                            <option value="P" {{ request('gender') == 'P' ? 'selected' : '' }}>Perempuan</option>
+                        <select name="jenis_kelamin" class="form-select">
+                            <option value="">-- Pilih Jenis Kelamin --</option>
+                            <option value="L" {{ request('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki
+                            </option>
+                            <option value="P" {{ request('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan
+                            </option>
                         </select>
                     </div>
                     <div class="col-md-4 d-flex align-items-end">
@@ -187,9 +187,7 @@
                                 style="background-color: #309898; border-color: #309898; color: white;">
                                 <i class="fas fa-search me-1"></i> Terapkan Filter
                             </button>
-
-
-                            <a href="{{ route('admin.dataguru.index') }}"
+                            <a href="{{ route('admin.datamurid.index') }}"
                                 class="btn btn-outline-secondary btn-sm flex-fill">
                                 <i class="fas fa-undo me-1"></i> Reset
                             </a>
@@ -219,8 +217,8 @@
     <!-- Main Content Card with Modern Design -->
     <div class="card border-0 shadow-sm">
         <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
-            <h5 class="mb-0 fw-bold">Daftar Guru</h5>
-            <span class="badge" style="background-color: #309898; color: white;">Total: {{ $guru->total() }}</span>
+            <h5 class="mb-0 fw-bold">Daftar Murid</h5>
+            <span class="badge" style="background-color: #309898; color: white;">Total: {{ $murid->total() }}</span>
         </div>
 
         <!-- Table Content with Modern Styling -->
@@ -231,55 +229,56 @@
                         <tr>
                             <th class="ps-3">ID</th>
                             <th>Nama</th>
-                            <th>NIP</th>
-                            <th>Email</th>
+                            <th>NIS</th>
+                            <th>Kelas</th>
                             <th>No. Telepon</th>
                             <th>Gender</th>
-                            <th>Mata Pelajaran</th>
+                            <th>Tanggal Lahir</th>
+                            <th>ID User</th>
                             <th class="text-center">Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($guru as $g)
+                        @forelse ($murid as $item)
                             <tr>
-                                <td class="ps-3">{{ $g->id }}</td>
+                                <td class="ps-3">{{ $item->id }}</td>
                                 <td>
                                     <div class="d-flex align-items-center">
-                                        <div {{ strtoupper(substr($g->nama, 0, 1)) }} </div>
-                                            <div>
-                                                <h6 class="mb-0 text-dark">{{ $g->nama }}</h6>
-                                                <small class="text-muted">Lahir:
-                                                    {{ \Carbon\Carbon::parse($g->tanggal_lahir)->format('d-m-Y') }}</small>
-                                            </div>
+                                        <div>
+                                            <h6 class="mb-0 text-dark">{{ $item->nama }}</h6>
+                                            <small class="text-muted">Lahir:
+                                                {{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</small>
                                         </div>
+                                    </div>
                                 </td>
-                                <td>{{ $g->nip }}</td>
-                                <td>{{ $g->email }}</td>
-                                <td>{{ $g->no_telp }}</td>
-                                <td>
-                                    <span
-                                        class="badge {{ $g->jenis_kelamin == 'L' ? 'bg-soft-primary text-primary' : 'bg-soft-danger text-danger' }} rounded-pill px-3 py-2">
-                                        <i class="fas fa-{{ $g->jenis_kelamin == 'L' ? 'mars' : 'venus' }} me-1"></i>
-                                        {{ $g->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
-                                    </span>
-                                </td>
+                                <td>{{ $item->nis }}</td>
                                 <td>
                                     <span class="badge bg-soft-info text-info rounded-pill px-3 py-2">
-                                        {{ $g->mataPelajaran->mata_pelajaran ?? 'Belum ditentukan' }}
+                                        {{ $item->kelas }}
                                     </span>
                                 </td>
+                                <td>{{ $item->no_telp }}</td>
+                                <td>
+                                    <span
+                                        class="badge {{ $item->jenis_kelamin == 'L' ? 'bg-soft-primary text-primary' : 'bg-soft-danger text-danger' }} rounded-pill px-3 py-2">
+                                        <i class="fas fa-{{ $item->jenis_kelamin == 'L' ? 'mars' : 'venus' }} me-1"></i>
+                                        {{ $item->jenis_kelamin == 'L' ? 'Laki-laki' : 'Perempuan' }}
+                                    </span>
+                                </td>
+                                <td>{{ \Carbon\Carbon::parse($item->tgl_lahir)->format('d-m-Y') }}</td>
+                                <td>{{ $item->id_user }}</td>
                                 <td>
                                     <div class="d-flex justify-content-center gap-2">
-                                        <a href="{{ route('admin.dataguru.show', $g->id) }}" class="btn btn-sm"
+                                        <a href="{{ route('admin.datamurid.show', $item->id) }}" class="btn btn-sm"
                                             style="background-color: #17a2b8; color: white;" title="Lihat Detail">
                                             <i class="fas fa-eye"></i>
                                         </a>
-                                        <a href="{{ route('admin.dataguru.edit', $g->id) }}" class="btn btn-sm"
+                                        <a href="{{ route('admin.datamurid.edit', $item->id) }}" class="btn btn-sm"
                                             style="background-color: #ffc107; color: white;" title="Edit Data">
                                             <i class="fas fa-edit"></i>
                                         </a>
-                                        <form action="{{ route('dataguru.destroy', $g->id) }}" method="POST"
-                                            onsubmit="return confirm('Yakin ingin menghapus guru ini?')">
+                                        <form action="{{ route('datamurid.destroy', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('Yakin ingin menghapus murid ini?')">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-sm"
@@ -289,19 +288,18 @@
                                         </form>
                                     </div>
                                 </td>
-
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="py-5 text-center">
+                                <td colspan="9" class="py-5 text-center">
                                     <div class="empty-state">
                                         <div class="empty-state-icon bg-light">
                                             <i class="fas fa-user-slash text-muted"></i>
                                         </div>
-                                        <h5 class="mt-4">Belum ada data guru</h5>
-                                        <p class="text-muted mb-4">Tambahkan guru baru untuk mulai mengelola data.</p>
-                                        <a href="{{ route('admin.dataguru.create') }}" class="btn btn-primary">
-                                            <i class="fas fa-plus-circle me-1"></i> Tambah Guru Baru
+                                        <h5 class="mt-4">Belum ada data murid</h5>
+                                        <p class="text-muted mb-4">Tambahkan murid baru untuk mulai mengelola data.</p>
+                                        <a href="{{ route('admin.datamurid.create') }}" class="btn btn-primary">
+                                            <i class="fas fa-plus-circle me-1"></i> Tambah Murid Baru
                                         </a>
                                     </div>
                                 </td>
@@ -316,12 +314,12 @@
         <div class="card-footer bg-white py-3">
             <div class="row align-items-center">
                 <div class="col-md-6 small text-muted">
-                    Menampilkan {{ $guru->firstItem() ?? 0 }} sampai {{ $guru->lastItem() ?? 0 }}
-                    dari {{ $guru->total() }} data guru
+                    Menampilkan {{ $murid->firstItem() ?? 0 }} sampai {{ $murid->lastItem() ?? 0 }}
+                    dari {{ $murid->total() }} data murid
                 </div>
                 <div class="col-md-6">
                     <div class="d-flex justify-content-md-end">
-                        {{ $guru->withQueryString()->links() }}
+                        {{ $murid->withQueryString()->links() }}
                     </div>
                 </div>
             </div>

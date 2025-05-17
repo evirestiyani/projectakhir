@@ -1,22 +1,33 @@
 @extends('layouts.layout')
 
 @section('content')
-    <div class="edit-guru-container py-5">
+    <div class="edit-murid-container py-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8">
                     <div class="card border-0 shadow-lg rounded-lg">
                         <div class="card-header bg-gradient-primary p-4 border-0">
                             <div class="d-flex justify-content-between align-items-center">
-                                <h3 class="text-black mb-0 font-weight-bold">Edit Data Guru</h3>
-                                <a href="{{ route('admin.dataguru.index') }}" class="btn btn-light btn-sm rounded-pill px-3">
+                                <h3 class="text-black mb-0 font-weight-bold">Edit Data Murid</h3>
+                                <a href="{{ route('admin.datamurid.index') }}" class="btn btn-light btn-sm rounded-pill px-3">
                                     <i class="fas fa-arrow-left me-1"></i> Kembali
                                 </a>
                             </div>
                         </div>
 
                         <div class="card-body p-4">
-                            <form action="{{ route('dataguru.update', $guru->id) }}" method="POST">
+                            {{-- Tampilkan error validasi --}}
+                            @if ($errors->any())
+                                <div class="alert alert-danger">
+                                    <ul class="mb-0">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form action="{{ route('datamurid.update', $murid->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
 
@@ -29,33 +40,39 @@
                                                     <i class="fas fa-user" style="color: #309898;"></i>
                                                 </span>
                                                 <input class="form-control border-0 bg-light py-2" type="text"
-                                                    name="nama" id="nama" value="{{ $guru->nama }}" required>
+                                                    name="nama" id="nama" value="{{ old('nama', $murid->nama) }}" required>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="nip" class="form-label fw-bold">NIP</label>
+                                            <label for="nis" class="form-label fw-bold">NIS</label>
                                             <div class="input-group">
                                                 <span class="input-group-text bg-light border-0">
                                                     <i class="fas fa-id-card" style="color: #309898;"></i>
                                                 </span>
                                                 <input class="form-control border-0 bg-light py-2" type="text"
-                                                    name="nip" id="nip" value="{{ $guru->nip }}" required>
+                                                    name="nis" id="nis" value="{{ old('nis', $murid->nis) }}" required>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="email" class="form-label fw-bold">Email</label>
+                                            <label for="kelas" class="form-label fw-bold">Kelas</label>
                                             <div class="input-group">
                                                 <span class="input-group-text bg-light border-0">
-                                                    <i class="fas fa-envelope" style="color: #309898;"  ></i>
+                                                    <i class="fas fa-school" style="color: #309898;"></i>
                                                 </span>
-                                                <input class="form-control border-0 bg-light py-2" type="email"
-                                                    name="email" id="email" value="{{ $guru->email }}" required>
+                                                <select class="form-select border-0 bg-light py-2" name="kelas"
+                                                    id="kelas" required>
+                                                    <option value="" selected disabled>-- Pilih Kelas --</option>
+                                                    @foreach ($kelasList as $kelas)
+                                                        <option value="{{ $kelas }}" {{ old('kelas', $murid->kelas) == $kelas ? 'selected' : '' }}>
+                                                            {{ $kelas }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
@@ -68,7 +85,7 @@
                                                     <i class="fas fa-phone" style="color: #309898;"></i>
                                                 </span>
                                                 <input class="form-control border-0 bg-light py-2" type="text"
-                                                    name="no_telp" id="no_telp" value="{{ $guru->no_telp }}" required>
+                                                    name="no_telp" id="no_telp" value="{{ old('no_telp', $murid->no_telp) }}">
                                             </div>
                                         </div>
                                     </div>
@@ -82,12 +99,9 @@
                                                 </span>
                                                 <select class="form-select border-0 bg-light py-2" name="jenis_kelamin"
                                                     id="jenis_kelamin" required>
-                                                    <option value="L"
-                                                        {{ $guru->jenis_kelamin == 'L' ? 'selected' : '' }}>Laki-laki
-                                                    </option>
-                                                    <option value="P"
-                                                        {{ $guru->jenis_kelamin == 'P' ? 'selected' : '' }}>Perempuan
-                                                    </option>
+                                                    <option value="" selected disabled>Pilih Jenis Kelamin</option>
+                                                    <option value="L" {{ old('jenis_kelamin', $murid->jenis_kelamin) == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                                                    <option value="P" {{ old('jenis_kelamin', $murid->jenis_kelamin) == 'P' ? 'selected' : '' }}>Perempuan</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -95,14 +109,14 @@
 
                                     <div class="col-md-6 mb-3">
                                         <div class="form-group">
-                                            <label for="tanggal_lahir" class="form-label fw-bold">Tanggal Lahir</label>
+                                            <label for="tgl_lahir" class="form-label fw-bold">Tanggal Lahir</label>
                                             <div class="input-group">
                                                 <span class="input-group-text bg-light border-0">
                                                     <i class="fas fa-calendar" style="color: #309898;"></i>
                                                 </span>
                                                 <input class="form-control border-0 bg-light py-2" type="date"
-                                                    name="tanggal_lahir" id="tanggal_lahir"
-                                                    value="{{ $guru->tanggal_lahir }}" required>
+                                                    name="tgl_lahir" id="tgl_lahir"
+                                                    value="{{ old('tgl_lahir', $murid->tgl_lahir) }}" required>
                                             </div>
                                         </div>
                                     </div>
@@ -114,39 +128,19 @@
                                                 <span class="input-group-text bg-light border-0">
                                                     <i class="fas fa-fingerprint" style="color: #309898;"></i>
                                                 </span>
-
                                                 <input class="form-control border-0 bg-light py-2" type="number"
-                                                    name="id_user" id="id_user" value="{{ $guru->id_user }}" required>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 mb-3">
-                                        <div class="form-group">
-                                            <label for="id_mapel" class="form-label fw-bold">Mata Pelajaran</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-light border-0">
-                                                    <i class="fas fa-book" style="color: #309898;"></i>
-                                                </span>
-                                                <select class="form-select border-0 bg-light py-2" name="id_mapel"
-                                                    id="id_mapel" required>
-                                                    @foreach ($mapel as $m)
-                                                        <option value="{{ $m->id }}"
-                                                            {{ $guru->id_mapel == $m->id ? 'selected' : '' }}>
-                                                            {{ $m->mata_pelajaran }}</option>
-                                                    @endforeach
-                                                </select>
+                                                    name="id_user" id="id_user" value="{{ old('id_user', $murid->id_user) }}" required>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="mt-4 d-flex gap-2 justify-content-end">
-                                    <a href="{{ route('admin.dataguru.index') }}" class="btn btn-light px-4 py-2">
+                                    <a href="{{ route('admin.datamurid.index') }}" class="btn btn-light px-4 py-2">
                                         <i class="fas fa-times me-1" style="color: #309898;"></i> Batal
                                     </a>
                                     <button class="btn btn-primary px-4 py-2" type="submit">
-                                        <i class="fas fa-save me-1"></i> Simpan Perubahan
+                                        <i class="fas fa-save me-1"></i> Update Data
                                     </button>
                                 </div>
                             </form>
@@ -158,7 +152,7 @@
     </div>
 
     <style>
-        .edit-guru-container {
+        .edit-murid-container {
             background-color: #f8f9fc;
             min-height: 100vh;
         }

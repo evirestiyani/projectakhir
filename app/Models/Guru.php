@@ -17,9 +17,9 @@ class Guru extends Model
         'email',
         'no_telp',
         'jenis_kelamin',
-        'tgl_lahir',
+        'tanggal_lahir',
         'id_user',
-        'id_mata_pelajaran',
+        'mata_pelajaran', // ✅ nama field yang sesuai dengan relasi
     ];
 
     // Relasi ke User
@@ -31,6 +31,6 @@ class Guru extends Model
     // Relasi ke Mata Pelajaran
     public function mataPelajaran()
     {
-        return $this->belongsTo(MataPelajaran::class, 'mata_pelajaran');
+        return $this->belongsTo(MataPelajaran::class, 'mata_pelajaran'); // ✅ fix disini
     }
 }

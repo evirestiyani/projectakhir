@@ -22,9 +22,9 @@ return new class extends Migration
             $table->timestamps();
         
             // Jika ada foreign key:
-            $table->foreign('id_guru')->references('id')->on('gurus');
-            $table->foreign('id_murid')->references('id')->on('murids');
-            $table->foreign('id_mata_pelajaran')->references('id')->on('mata_pelajarans');
+            $table->foreign('id_guru')->references('id')->on('guru');
+            $table->foreign('id_murid')->references('id')->on('murid');
+            $table->foreign('id_mata_pelajaran')->references('id')->on('mata_pelajaran');
         });
         
     }
