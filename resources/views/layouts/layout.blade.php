@@ -179,7 +179,7 @@
             transition: all 0.3s;
         }
 
-        .nav-link.active + .nav-indicator {
+        .nav-link.active+.nav-indicator {
             opacity: 1;
         }
 
@@ -342,6 +342,24 @@
             background: var(--primary-color);
             color: white;
         }
+
+       .logout-button {
+        padding: 10px 24px;
+        background-color: #F7CFD8; /* pastel pink */
+        color: #4B4453; /* soft dark text */
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .logout-button:hover {
+        background-color: #f4bfc8; /* slightly darker on hover */
+        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+    }
     </style>
 </head>
 
@@ -409,7 +427,7 @@
         <ul class="nav flex-column">
             <li class="nav-item">
                 <a class="nav-link {{ Request::routeIs('admin.datanilai.index') ? 'active' : '' }}"
-                   href=""{{ route('admin.datanilai.index') }}"">
+                    href="{{ route('admin.datanilai.index') }}">
                     <i class="fas fa-clipboard-list"></i> Penilaian
                 </a>
                 <div class="nav-indicator"></div>
@@ -422,12 +440,14 @@
                 <div class="nav-indicator"></div>
             </li>
         </ul>
+        
+  <div class="logout-section mt-auto" style="text-align: center; margin-top: 20px;">
+    <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" class="logout-button">Logout</button>
+    </form>
+</div>
 
-        <div class="logout-section mt-auto">
-            <button class="btn-logout">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-        </div>
 
         <div class="sidebar-footer">
             EvaluaTech Admin Panel &copy; 2025

@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\DataMataPelajaranController;
 use App\Http\Controllers\Admin\DataUserController;
 use App\Http\Controllers\Admin\DataMuridController;
 use App\Http\Controllers\admin\DataNilaiController;
+use App\Http\Controllers\Murid\DashMuridController;
+use App\Http\Controllers\AuthController;
 use App\Exports\GuruExport;
 use App\Http\Controllers\Guru\DashboardGuruController;
 use Maatwebsite\Excel\Facades\Excel;
@@ -58,17 +60,34 @@ Route::get('datamurid/{id}/edit', [DataMuridController::class, 'edit'])->name('a
 Route::put('datamurid/{id}', [DataMuridController::class, 'update'])->name('datamurid.update');
 Route::delete('datamurid/{id}', [DataMuridController::class, 'destroy'])->name('datamurid.destroy');
 Route::get('datamurid/export-pdf', [DataMuridController::class, 'exportPDF'])->name('admin.datamurid.exportPDF');  // <-- Ini sudah benar
-
+Route::get('/datanilai/export-nilai-txt', [DataNilaiController::class, 'exportTxt'])
+    ->name('admin.datanilai.exportTxt');
 
 //DATANILAI
-Route::get('nilai', [DataNilaiController::class, 'index'])->name('admin.datanilai.index');
-Route::get('nilai/create', [DataNilaiController::class, 'create'])->name('admin.datanilai.create');
-Route::post('nilai', [DataNilaiController::class, 'store'])->name('datanilai.store');
-Route::get('nilai/{id}/edit', [DataNilaiController::class, 'edit'])->name('admin.datanilai.edit');
-Route::put('nilai/{id}', [DataNilaiController::class, 'update'])->name('datanilai.update');
-Route::delete('nilai/{id}', [DataNilaiController::class, 'destroy'])->name('datanilai.destroy');
-Route::get('nilai/export-pdf', [DataNilaiController::class, 'exportPdf'])->name('admin.datanilai.exportPDF');
+Route::get('datanilai', [DataNilaiController::class, 'index'])->name('admin.datanilai.index');
+Route::get('datanilai/create', [DataNilaiController::class, 'create'])->name('admin.datanilai.create');
+Route::post('datanilai', [DataNilaiController::class, 'store'])->name('datanilai.store');
+Route::get('datanilai/{id}/edit', [DataNilaiController::class, 'edit'])->name('admin.datanilai.edit');
+Route::put('datanilai/{id}', [DataNilaiController::class, 'update'])->name('datanilai.update');
+Route::delete('datanilai/{id}', [DataNilaiController::class, 'destroy'])->name('datanilai.destroy');
+Route::get('datanilai/export-pdf', [DataNilaiController::class, 'exportPdf'])->name('admin.datanilai.exportPDF');
 
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
+});
 
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-//DASHBOARD GURU
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::view('/admin/dashboardadmin', '/admin/dashboardadmin');
+});
+
+Route::middleware(['auth', 'role:guru'])->group(function () {
+    Route::view('/guru/dashboardguru', '/guru/dashboardguru');
+});
+
+Route::middleware(['auth', 'role:murid'])->group(function () {
+    Route::get('/murid/dashboardmurid', [DashMuridController::class, 'index'])->name('murid.dashboardmurid');
+
+});

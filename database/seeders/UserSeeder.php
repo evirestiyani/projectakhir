@@ -13,7 +13,6 @@ class UserSeeder extends Seeder
         DB::table('users')->delete(); // Hapus semua data
         DB::statement('ALTER TABLE users AUTO_INCREMENT = 1'); // Reset auto-increment jika diperlukan
     
-        // Insert manual biar bisa set id-nya
         DB::table('users')->insert([
             [
                 'id' => 1,

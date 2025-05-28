@@ -24,7 +24,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($nilai as $n)
+            @foreach($data as $n)
                 <tr>
                     <td>{{ $n->id }}</td>
                     <td>{{ $n->guru->nama ?? '-' }}</td>

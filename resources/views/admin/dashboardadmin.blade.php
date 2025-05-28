@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-1">
-                        <h4 class="mb-0">{{ $jumlahSiswa }}</h4>
+                        {{-- <h4 class="mb-0">{{ $jumlahSiswa }}</h4> --}}
                         <span class="text-success ms-2" style="font-size: 0.9rem;">
                             <i class="fas fa-arrow-up"></i> 6%
                         </span>
@@ -69,7 +69,7 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-1">
-                        <h4 class="mb-0">{{ $jumlahGuru }}</h4>
+                        {{-- <h4 class="mb-0">{{ $jumlahGuru }}</h4> --}}
                         <span class="text-success ms-2" style="font-size: 0.9rem;">
                             <i class="fas fa-arrow-up"></i> 6%
                         </span>
@@ -104,7 +104,7 @@
                     </div>
 
                     <div class="d-flex align-items-center mb-1">
-                        <h4 class="mb-0">{{ $jumlahPenilaian }}</h4>
+                        {{-- <h4 class="mb-0">{{ $jumlahPenilaian }}</h4> --}}
                         <span class="text-success ms-2" style="font-size: 0.9rem;">
                             <i class="fas fa-arrow-up"></i> 6%
                         </span>
